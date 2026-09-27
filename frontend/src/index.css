@@ -1,0 +1,234 @@
+/* ═══════════════════════════════════════════════════════════════
+   Design Tokens — Light & Dark
+═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces */
+  --bg:            #f0f2f9;
+  --surface:       #ffffff;
+  --surface-raised:#f8f9fc;
+  --surface-hover: #f1f3f9;
+
+  /* Text */
+  --text-primary:  #0f1117;
+  --text-muted:    #6b7280;
+
+  /* Border */
+  --border:        #e2e5ee;
+
+  /* Accent — vivid indigo */
+  --accent:        #6366f1;
+  --accent-hover:  #4f52d9;
+  --accent-glow:   rgba(99, 102, 241, 0.25);
+  --accent-subtle: rgba(99, 102, 241, 0.08);
+  --accent-border: rgba(99, 102, 241, 0.35);
+
+  /* Semantic */
+  --success:       #16a34a;
+  --error:         #dc2626;
+  --error-hover:   #b91c1c;
+  --error-border:  rgba(220, 38, 38, 0.35);
+
+  /* Card gradients */
+  --card-front-from: #6366f1;
+  --card-front-to:   #8b5cf6;
+  --card-back-from:  #0ea5e9;
+  --card-back-to:    #6366f1;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.1),  0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,0.13), 0 4px 12px rgba(0,0,0,0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #0d0f18;
+    --surface:       #13151f;
+    --surface-raised:#1a1d2e;
+    --surface-hover: #21253a;
+
+    --text-primary:  #eef0f6;
+    --text-muted:    #8b92a8;
+
+    --border:        #272b40;
+
+    --accent:        #818cf8;
+    --accent-hover:  #6366f1;
+    --accent-glow:   rgba(129, 140, 248, 0.3);
+    --accent-subtle: rgba(129, 140, 248, 0.1);
+    --accent-border: rgba(129, 140, 248, 0.35);
+
+    --success:       #22c55e;
+    --error:         #f87171;
+    --error-hover:   #ef4444;
+    --error-border:  rgba(248, 113, 113, 0.35);
+
+    --card-front-from: #4f52d9;
+    --card-front-to:   #7c3aed;
+    --card-back-from:  #0284c7;
+    --card-back-to:    #4f52d9;
+
+    --shadow-sm:  0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md:  0 4px 16px rgba(0,0,0,0.4);
+    --shadow-lg:  0 12px 40px rgba(0,0,0,0.5);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Reset & Base
+═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Animated mesh-gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(14, 165, 233, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   App Shell
+═══════════════════════════════════════════════════════════════ */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.app__header {
+  padding: 1.5rem 1.5rem 0;
+  text-align: center;
+}
+
+.app__header-inner {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app__logo-icon {
+  font-size: 1.75rem;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.app__logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app__tagline {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ── Main ────────────────────────────────────────────────────── */
+.app__main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.75rem 1rem 2rem;
+}
+
+.app__card {
+  width: 100%;
+  max-width: 640px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.app__divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.app__footer {
+  text-align: center;
+  padding: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.app__footer strong {
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Mobile
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 680px) {
+  .app__card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .app__logo-text {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app__main {
+    padding: 1rem 0.5rem;
+  }
+
+  .app__card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}

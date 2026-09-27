@@ -1,0 +1,60 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2.5rem 2rem;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--error-border);
+  border-radius: 16px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.error__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.error__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--error);
+  margin: 0;
+}
+
+.error__message {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.error__retry {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  background: var(--error);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.error__retry:hover {
+  background: var(--error-hover);
+  transform: translateY(-1px);
+}
+
+.error__retry:active {
+  transform: translateY(0);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
