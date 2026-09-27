@@ -8,9 +8,10 @@ import './ResultView.css';
  * @param {{
  *   result: import('../types/result').StudyResult;
  *   onReset: () => void;
+ *   onQuizComplete?: (score: number, total: number) => void;
  * }} props
  */
-export default function ResultView({ result, onReset }) {
+export default function ResultView({ result, onReset, onQuizComplete }) {
   return (
     <div className="result-view">
       <div className="result-view__toolbar">
@@ -29,7 +30,7 @@ export default function ResultView({ result, onReset }) {
       )}
 
       {result.mode === 'quiz' && (
-        <Quiz items={result.quiz} />
+        <Quiz items={result.quiz} onComplete={onQuizComplete} />
       )}
     </div>
   );

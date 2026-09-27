@@ -6,7 +6,21 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:5174'] }));
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin) return callback(null, true);
+    const allowed = [
+      'http://localhost:5173',
+      'http://localhost:5174',
+      // Production frontend URL — set via environment variable
+      process.env.FRONTEND_URL,
+    ].filter(Boolean);
+    if (allowed.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS: origin ${origin} not allowed`));
+  },
+  optionsSuccessStatus: 200,
+}));
 app.use(express.json());
 
 // ─── Schema Validator ────────────────────────────────────────────────────────

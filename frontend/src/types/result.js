@@ -14,6 +14,16 @@
  *
  * @typedef {'flashcards' | 'quiz'} Mode
  * @typedef {'idle' | 'loading' | 'success' | 'error'} Status
+ *
+ * @typedef {{
+ *   id: string;
+ *   timestamp: number;
+ *   notesPreview: string;
+ *   mode: Mode;
+ *   result: StudyResult;
+ *   quizScore: number | null;
+ *   quizTotal: number | null;
+ * }} HistoryEntry
  */
 
 export {};

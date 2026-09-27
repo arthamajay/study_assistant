@@ -1,9 +1,13 @@
 /**
  * The only place in the frontend that talks to the backend proxy.
  * The LLM call itself never happens in the browser.
+ *
+ * API_BASE is set via the VITE_API_URL environment variable so the same
+ * build works locally (http://localhost:4000) and in production (your
+ * deployed backend URL). Falls back to localhost for local development.
  */
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:4000';
 
 /**
  * @param {{ notes: string; mode: import('../types/result').Mode; signal?: AbortSignal }} params

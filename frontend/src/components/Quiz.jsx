@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Quiz.css';
 
 /**
- * @param {{ items: import('../types/result').QuizQuestion[] }} props
+ * @param {{
+ *   items: import('../types/result').QuizQuestion[];
+ *   onComplete?: (score: number, total: number) => void;
+ * }} props
  */
-export default function Quiz({ items }) {
+export default function Quiz({ items, onComplete }) {
   const [index, setIndex]           = useState(0);
   const [selected, setSelected]     = useState(/** @type {number|null} */ (null));
   const [showExp, setShowExp]       = useState(false);
@@ -12,6 +15,8 @@ export default function Quiz({ items }) {
   const [wrongItems, setWrongItems] = useState(/** @type {import('../types/result').QuizQuestion[]} */ ([]));
   const [activeItems, setActiveItems] = useState(items);
   const [done, setDone]             = useState(false);
+  // Track score synchronously for the onComplete callback
+  const scoreRef = useRef(0);
 
   const current = activeItems[index];
   const total   = activeItems.length;
@@ -31,6 +36,7 @@ export default function Quiz({ items }) {
     setSelected(idx);
     const correct = idx === current.correctAnswerIndex;
     if (correct) {
+      scoreRef.current += 1;
       setScore((s) => s + 1);
     } else {
       setWrongItems((w) => [...w, current]);
@@ -41,6 +47,7 @@ export default function Quiz({ items }) {
   const handleNext = () => {
     if (index + 1 >= total) {
       setDone(true);
+      onComplete?.(scoreRef.current, total);
     } else {
       setSelected(null);
       setShowExp(false);
@@ -51,6 +58,7 @@ export default function Quiz({ items }) {
   const retestWrong = () => {
     setActiveItems(wrongItems);
     setWrongItems([]);
+    scoreRef.current = 0;
     setScore(0);
     setIndex(0);
     setSelected(null);
@@ -61,6 +69,7 @@ export default function Quiz({ items }) {
   const restartFull = () => {
     setActiveItems(items);
     setWrongItems([]);
+    scoreRef.current = 0;
     setScore(0);
     setIndex(0);
     setSelected(null);
