@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import './FlashcardDeck.css';
 
 /**
@@ -47,6 +47,22 @@ export default function FlashcardDeck({ cards }) {
   const progress     = Math.round(((knownCount + unknownCount) / total) * 100);
 
   const cardState = known.has(index) ? 'known' : unknown.has(index) ? 'unknown' : 'neutral';
+
+  // Keyboard navigation: ← → arrows to navigate, Space/Enter to flip
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+      else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        setFlipped((f) => !f);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, total]);
 
   return (
     <div className="deck">
@@ -123,6 +139,7 @@ export default function FlashcardDeck({ cards }) {
           Next →
         </button>
       </div>
+      <p className="deck__keyboard-hint">← → navigate · Space to flip</p>
 
       {/* ── All reviewed summary ── */}
       {knownCount + unknownCount === total && (

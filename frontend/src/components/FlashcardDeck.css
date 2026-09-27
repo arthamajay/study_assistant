@@ -306,6 +306,13 @@
   transform: translateY(-1px);
 }
 
+.deck__keyboard-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.55;
+  text-align: center;
+}
+
 /* ── Shared animation ───────────────────────────────────────── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(16px); }

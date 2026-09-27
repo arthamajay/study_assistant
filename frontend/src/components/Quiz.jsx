@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Quiz.css';
 
 /**
@@ -15,6 +15,16 @@ export default function Quiz({ items }) {
 
   const current = activeItems[index];
   const total   = activeItems.length;
+
+  // Keyboard: Enter advances when explanation is showing
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === 'Enter' && showExp) handleNext();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showExp, index, total]);
 
   const handleSelect = (idx) => {
     if (showExp) return;
@@ -161,6 +171,7 @@ export default function Quiz({ items }) {
           <button className="quiz__next-btn" onClick={handleNext}>
             {index + 1 < total ? 'Next question →' : 'See results'}
           </button>
+          <span className="quiz__key-hint">or press Enter</span>
         </div>
       )}
     </div>
